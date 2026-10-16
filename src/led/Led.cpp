@@ -20,6 +20,6 @@ void Led::off() {
 }
 
 
-const char* Led::getState() {
+const char* Led::getName() {
     return _name;
 }

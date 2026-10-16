@@ -4,7 +4,7 @@
 class Led 
 {
   public:
-    Led(int pin);
+    Led(int pin, const char* nom);
     void on();
     void off();
     const char* getName();

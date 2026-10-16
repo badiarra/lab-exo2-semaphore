@@ -76,15 +76,15 @@ void vTaskLed(void* param){
 
   Led *led = (Led*)param;
   float distance;
-  bool etat=false;
+  bool etat;
 
   while(true){
-
+     etat=false;
      xSemaphoreTake(distMutex, portMAX_DELAY);
      distance = refDistance;
      xSemaphoreGive(distMutex);
 
-    if(distance >=0 && distance < 20 && strcmp(led->getName(), RED) == 0) ){
+    if(distance >=0 && distance < 20 && strcmp(led->getName(), RED) == 0){
       //led->on();
       etat = true;
       xSemaphoreTake(serialMutex, portMAX_DELAY);
@@ -92,7 +92,7 @@ void vTaskLed(void* param){
       xSemaphoreGive(serialMutex);
      
       
-    } else if(distance >=20 && distance < 40 && strcmp(led->getName(), YELLOW) == 0) ){
+    } else if(distance >=20 && distance < 40 && strcmp(led->getName(), YELLOW) == 0){
 
       //led->on();
       etat = true;
@@ -101,7 +101,7 @@ void vTaskLed(void* param){
       Serial.println("LED jaune on");
       xSemaphoreGive(serialMutex);
 
-    } else if(distance >=40 && strcmp(led->getName(), GREEN) == 0) ){
+    } else if(distance >=40 && strcmp(led->getName(), GREEN) == 0){
 
       //led->on();
       etat = true;
@@ -146,7 +146,7 @@ void setup() {
    xTaskCreate(
         vTaskMeasure,
         "Measure",
-        1024,
+        4096,
         nullptr,
         2,
         &sensorHandle
@@ -155,7 +155,7 @@ void setup() {
   xTaskCreate(
         vTaskDisplay,
         "Display",
-        1024,
+        4096,
         nullptr,
         2,
         &displayHandle
@@ -164,7 +164,7 @@ void setup() {
   xTaskCreate(
         vTaskLed,
         GREEN,
-        1024,
+        4096,
         &ledGreen,
         2,
         &greenHandle
@@ -173,7 +173,7 @@ void setup() {
   xTaskCreate(
         vTaskLed,
         YELLOW,
-        1024,
+        4096,
         &ledYellow,
         2,
         &yellowHandle
@@ -182,7 +182,7 @@ void setup() {
   xTaskCreate(
         vTaskLed,
         RED,
-        1024,
+        4096,
         &ledRed,
         2,
         &redHandle
