@@ -63,7 +63,7 @@ void vTaskDisplay(void* param){
     xSemaphoreGive(distMutex);
 
     xSemaphoreTake(serialMutex, portMAX_DELAY);
-    Serial.print("La distnace mesurée est :");
+    Serial.print("La distance mesurée est :");
     Serial.println(distance);
     xSemaphoreGive(serialMutex);
 
